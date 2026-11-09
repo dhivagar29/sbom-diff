@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-09T18:38:01.764Z",
+  "meta": {
+    "baseRef": "main",
+    "headRef": "feat/deps",
+    "baseSha": "",
+    "headSha": "",
+    "repository": "dhivagar29/sbom-diff",
+    "pullRequestNumber": 1
+  },
+  "summary": {
+    "added": 5,
+    "removed": 3,
+    "upgraded": 2,
+    "downgraded": 3,
+    "vulnerable": 6
+  },
+  "changes": {
+    "added": [
+      {
+        "ecosystem": "Go",
+        "name": "github.com/sirupsen/logrus",
+        "change": "added",
+        "version": "v1.9.3",
+        "source": "go.sum",
+        "vulnerabilities": []
+      },
+      {
+        "ecosystem": "PyPI",
+        "name": "pyyaml",
+        "change": "added",
+        "version": "5.3.1",
+        "source": "requirements.txt",
+        "vulnerabilities": [
+          {
+            "id": "GHSA-8q59-q68h-6hv4",
+            "summary": "Improper Input Validation in PyYAML",
+            "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+          },
+          {
+            "id": "PYSEC-2021-142",
+            "summary": "A vulnerability was discovered in the PyYAML library in versions before 5.4, where it is susceptible to arbitrary code execution when it processes untrusted YAML files through the full_load method or…",
+            "severity": "UNKNOWN"
+          }
+        ]
+      },
+      {
+        "ecosystem": "PyPI",
+        "name": "werkzeug",
+        "change": "added",
+        "version": "3.0.1",
+        "source": "poetry.lock",
+        "vulnerabilities": [
+          {
+            "id": "GHSA-29vq-49wr-vm6x",
+            "summary": "Werkzeug safe_join() allows Windows special device names",
+            "severity": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+          },
+          {
+            "id": "GHSA-2g68-c3qc-8985",
+            "summary": "Werkzeug debugger vulnerable to remote execution when interacting with attacker controlled domain",
+            "severity": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H"
+          },
+          {
+            "id": "GHSA-87hc-h4r5-73f7",
+            "summary": "Werkzeug safe_join() allows Windows special device names with compound extensions",
+            "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          {
+            "id": "GHSA-f9vj-2wh5-fj8j",
+            "summary": "Werkzeug safe_join not safe on Windows",
+            "severity": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N"
+          },
+          {
+            "id": "GHSA-g6x2-hccm-hh4m",
+            "summary": "Werkzeug safe_join() allows Windows special device names",
+            "severity": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+          },
+          {
+            "id": "GHSA-hgf8-39gv-g3f2",
+            "summary": "Werkzeug safe_join() allows Windows special device names",
+            "severity": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+          },
+          {
+            "id": "GHSA-q34m-jh98-gwm2",
+            "summary": "Werkzeug possible resource exhaustion when parsing file data in forms",
+            "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          {
+            "id": "PYSEC-2026-2043",
+            "summary": "Werkzeug debugger vulnerable to remote execution when interacting with attacker controlled domain",
+            "severity": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H"
+          },
+          {
+            "id": "PYSEC-2026-2044",
+            "summary": "Werkzeug safe_join() allows Windows special device names with compound extensions",
+            "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          {
+            "id": "PYSEC-2026-2045",
+            "summary": "Werkzeug safe_join not safe on Windows",
+            "severity": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N"
+          },
+          {
+            "id": "PYSEC-2026-2046",
+            "summary": "Werkzeug safe_join() allows Windows special device names",
+            "severity": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+          },
+          {
+            "id": "PYSEC-2026-2320",
+            "summary": "Werkzeug is a comprehensive WSGI web application library. Versions 3.1.5 and below, the safe_join function allows Windows device names as filenames if preceded by other path segments. This was previo…",
+            "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          {
+            "id": "PYSEC-2026-3417",
+            "summary": "Werkzeug possible resource exhaustion when parsing file data in forms",
+            "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          {
+            "id": "PYSEC-2026-4312",
+            "summary": "Werkzeug safe_join() allows Windows special device names",
+            "severity": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+          }
+        ]
+      },
+      {
+        "ecosystem": "github-actions",
+        "name": "aquasecurity/trivy-action",
+        "change": "added",
+        "version": "0.20.0",
+        "source": ".github/workflows/ci.yml",
+        "vulnerabilities": []
+      },
+      {
+        "ecosystem": "npm",
+        "name": "express",
+        "change": "added",
+        "version": "4.18.2",
+        "source": "package-lock.json",
+        "vulnerabilities": [
+          {
+            "id": "GHSA-qw6h-vgh9-j6wx",
+            "summary": "express vulnerable to XSS via response.redirect()",
+            "severity": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L"
+          },
+          {
+            "id": "GHSA-rv95-896h-c2vc",
+            "summary": "Express.js Open Redirect in malformed URLs",
+            "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+          }
+        ]
+      }
+    ],
+    "removed": [
+      {
+        "ecosystem": "PyPI",
+        "name": "jinja2",
+        "change": "removed",
+        "version": "3.1.2",
+        "source": "poetry.lock",
+        "vulnerabilities": []
+      },
+      {
+        "ecosystem": "PyPI",
+        "name": "urllib3",
+        "change": "removed",
+        "version": "2.0.7",
+        "source": "requirements.txt",
+        "vulnerabilities": []
+      },
+      {
+        "ecosystem": "npm",
+        "name": "left-pad",
+        "change": "removed",
+        "version": "1.3.0",
+        "source": "package-lock.json",
+        "vulnerabilities": []
+      }
+    ],
+    "upgraded": [
+      {
+        "ecosystem": "Go",
+        "name": "github.com/google/uuid",
+        "change": "upgraded",
+        "version": "v1.6.0",
+        "from": "v1.3.0",
+        "to": "v1.6.0",
+        "source": "go.sum",
+        "vulnerabilities": []
+      },
+      {
+        "ecosystem": "PyPI",
+        "name": "flask",
+        "change": "upgraded",
+        "version": "3.0.0",
+        "from": "2.3.2",
+        "to": "3.0.0",
+        "source": "poetry.lock",
+        "vulnerabilities": [
+          {
+            "id": "GHSA-68rp-wp8r-4726",
+            "summary": "Flask session does not add `Vary: Cookie` header when accessed in some ways",
+            "severity": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N"
+          },
+          {
+            "id": "PYSEC-2026-2151",
+            "summary": "Flask is a web server gateway interface (WSGI) web application framework. In versions 3.1.2 and below, when the session object is accessed, Flask should set the Vary: Cookie header., resulting in a U…",
+            "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N"
+          }
+        ]
+      }
+    ],
+    "downgraded": [
+      {
+        "ecosystem": "PyPI",
+        "name": "requests",
+        "change": "downgraded",
+        "version": "2.28.0",
+        "from": "2.31.0",
+        "to": "2.28.0",
+        "source": "requirements.txt",
+        "vulnerabilities": [
+          {
+            "id": "GHSA-9hjg-9r4m-mvj7",
+            "summary": "Requests vulnerable to .netrc credentials leak via malicious URLs",
+            "severity": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N"
+          },
+          {
+            "id": "GHSA-9wx4-h78v-vm56",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "severity": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N"
+          },
+          {
+            "id": "GHSA-gc5v-m9x4-r6x2",
+            "summary": "Requests has Insecure Temp File Reuse in its extract_zipped_paths() utility function",
+            "severity": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:N/I:H/A:N"
+          },
+          {
+            "id": "GHSA-j8r2-6x86-q33q",
+            "summary": "Unintended leak of Proxy-Authorization header in requests",
+            "severity": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:N/A:N"
+          },
+          {
+            "id": "PYSEC-2023-74",
+            "summary": "Requests is a HTTP library. Since Requests 2.3.0, Requests has been leaking Proxy-Authorization headers to destination servers when redirected to an HTTPS endpoint. This is a product of how we use `r…",
+            "severity": "UNKNOWN"
+          },
+          {
+            "id": "PYSEC-2026-1872",
+            "summary": "Requests vulnerable to .netrc credentials leak via malicious URLs",
+            "severity": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N"
+          },
+          {
+            "id": "PYSEC-2026-1873",
+            "summary": "Requests `Session` object does not verify requests after making first request with verify=False",
+            "severity": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:N"
+          },
+          {
+            "id": "PYSEC-2026-2275",
+            "summary": "Requests is a HTTP library. Prior to version 2.33.0, the `requests.utils.extract_zipped_paths()` utility function uses a predictable filename when extracting files from zip archives into the system t…",
+            "severity": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N"
+          }
+        ]
+      },
+      {
+        "ecosystem": "github-actions",
+        "name": "actions/checkout",
+        "change": "downgraded",
+        "version": "b4ffde65f46336ab88eb53be808477a3936bae11",
+        "from": "v4",
+        "to": "b4ffde65f46336ab88eb53be808477a3936bae11",
+        "source": ".github/workflows/ci.yml",
+        "vulnerabilities": []
+      },
+      {
+        "ecosystem": "npm",
+        "name": "lodash",
+        "change": "downgraded",
+        "version": "4.17.20",
+        "from": "4.17.21",
+        "to": "4.17.20",
+        "source": "package-lock.json",
+        "vulnerabilities": [
+          {
+            "id": "GHSA-29mw-wpgm-hmr9",
+            "summary": "Regular Expression Denial of Service (ReDoS) in lodash",
+            "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          {
+            "id": "GHSA-35jh-r3h4-6jhm",
+            "summary": "Command Injection in lodash",
+            "severity": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H"
+          },
+          {
+            "id": "GHSA-r5fr-rjxr-66jc",
+            "summary": "",
+            "severity": "UNKNOWN"
+          },
+          {
+            "id": "GHSA-xxjr-mmjv-4gpg",
+            "summary": "",
+            "severity": "UNKNOWN"
+          }
+        ]
+      }
+    ]
+  }
+}

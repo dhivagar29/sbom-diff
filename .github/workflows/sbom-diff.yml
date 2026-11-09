@@ -1,0 +1,48 @@
+# Workflow A — compute. Runs on pull_request (NOT pull_request_target).
+# permissions: contents: read only. Uploads an untrusted artifact for Workflow B.
+name: sbom-diff
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout base
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
+          persist-credentials: false
+
+      - name: Checkout head
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: head
+          persist-credentials: false
+
+      # When consuming from another repo, replace ./ with owner/sbom-diff@<sha>
+      - name: Compute dependency diff
+        uses: ./
+        with:
+          base-path: base
+          head-path: head
+          output-path: sbom-diff.json
+          base-ref: ${{ github.event.pull_request.base.ref }}
+          head-ref: ${{ github.event.pull_request.head.ref }}
+          base-sha: ${{ github.event.pull_request.base.sha }}
+          head-sha: ${{ github.event.pull_request.head.sha }}
+          pull-request-number: ${{ github.event.pull_request.number }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        with:
+          name: sbom-diff-json
+          path: sbom-diff.json
+          if-no-files-found: error
+          retention-days: 5

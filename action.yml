@@ -1,0 +1,83 @@
+name: sbom-diff
+description: Compare dependency manifests between PR base and head, query OSV, write a JSON artifact.
+author: dhivagar29
+branding:
+  icon: shield
+  color: blue
+inputs:
+  base-path:
+    description: Path to the base (merge-target) checkout
+    required: true
+  head-path:
+    description: Path to the head (PR branch) checkout
+    required: true
+  output-path:
+    description: Where to write the JSON artifact
+    required: false
+    default: sbom-diff.json
+  skip-osv:
+    description: If 'true', skip the OSV network lookup
+    required: false
+    default: 'false'
+  base-ref:
+    description: Base ref label for metadata
+    required: false
+    default: ''
+  head-ref:
+    description: Head ref label for metadata
+    required: false
+    default: ''
+  base-sha:
+    description: Base commit SHA
+    required: false
+    default: ''
+  head-sha:
+    description: Head commit SHA
+    required: false
+    default: ''
+  repository:
+    description: owner/repo
+    required: false
+    default: ${{ github.repository }}
+  pull-request-number:
+    description: PR number embedded in the artifact
+    required: false
+    default: ${{ github.event.pull_request.number }}
+outputs:
+  artifact-path:
+    description: Path to the written JSON artifact
+    value: ${{ steps.run.outputs.artifact-path }}
+runs:
+  using: composite
+  steps:
+    - name: Set up Node 20
+      uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+      with:
+        node-version: '20'
+    - name: Run sbom-diff
+      id: run
+      shell: bash
+      env:
+        INPUT_BASE: ${{ inputs.base-path }}
+        INPUT_HEAD: ${{ inputs.head-path }}
+        INPUT_OUT: ${{ inputs.output-path }}
+        INPUT_SKIP_OSV: ${{ inputs.skip-osv }}
+        INPUT_BASE_REF: ${{ inputs.base-ref }}
+        INPUT_HEAD_REF: ${{ inputs.head-ref }}
+        INPUT_BASE_SHA: ${{ inputs.base-sha }}
+        INPUT_HEAD_SHA: ${{ inputs.head-sha }}
+        INPUT_REPO: ${{ inputs.repository }}
+        INPUT_PR: ${{ inputs.pull-request-number }}
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        set -euo pipefail
+        ARGS=(node "$ACTION_PATH/src/cli.js" --base "$INPUT_BASE" --head "$INPUT_HEAD" --out "$INPUT_OUT")
+        if [ "${INPUT_SKIP_OSV}" = "true" ]; then ARGS+=(--skip-osv); fi
+        if [ -n "${INPUT_BASE_REF}" ]; then ARGS+=(--base-ref "$INPUT_BASE_REF"); fi
+        if [ -n "${INPUT_HEAD_REF}" ]; then ARGS+=(--head-ref "$INPUT_HEAD_REF"); fi
+        if [ -n "${INPUT_BASE_SHA}" ]; then ARGS+=(--base-sha "$INPUT_BASE_SHA"); fi
+        if [ -n "${INPUT_HEAD_SHA}" ]; then ARGS+=(--head-sha "$INPUT_HEAD_SHA"); fi
+        if [ -n "${INPUT_REPO}" ]; then ARGS+=(--repository "$INPUT_REPO"); fi
+        if [ -n "${INPUT_PR}" ] && [ "${INPUT_PR}" != "null" ]; then ARGS+=(--pr "$INPUT_PR"); fi
+        "${ARGS[@]}"
+        echo "artifact-path=$INPUT_OUT" >> "$GITHUB_OUTPUT"

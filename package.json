@@ -1,0 +1,18 @@
+{
+  "name": "sbom-diff",
+  "version": "1.0.0",
+  "description": "PR dependency and vulnerability diff for npm, Python, Go, and GitHub Actions",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "diff": "node src/cli.js",
+    "sample": "node scripts/generate-sample.js"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

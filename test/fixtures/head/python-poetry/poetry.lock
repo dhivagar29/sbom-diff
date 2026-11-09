@@ -1,0 +1,15 @@
+[[package]]
+name = "flask"
+version = "3.0.0"
+description = "fixture"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "werkzeug"
+version = "3.0.1"
+description = "fixture"
+category = "main"
+optional = false
+python-versions = "*"

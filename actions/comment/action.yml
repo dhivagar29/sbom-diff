@@ -1,0 +1,42 @@
+name: sbom-diff-comment
+description: Validate an sbom-diff JSON artifact and post or update a sticky PR comment. Never checks out PR code.
+author: dhivagar29
+branding:
+  icon: message-square
+  color: blue
+inputs:
+  artifact-path:
+    description: Path to the downloaded sbom-diff JSON artifact
+    required: true
+  repository:
+    description: owner/repo
+    required: false
+    default: ${{ github.repository }}
+  pull-request-number:
+    description: PR number (optional if present in artifact meta)
+    required: false
+    default: ''
+  github-token:
+    description: Token with pull-requests:write
+    required: false
+    default: ${{ github.token }}
+runs:
+  using: composite
+  steps:
+    - name: Set up Node 20
+      uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+      with:
+        node-version: '20'
+    - name: Post sticky comment
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        GITHUB_REPOSITORY: ${{ inputs.repository }}
+        SBOM_DIFF_ARTIFACT: ${{ inputs.artifact-path }}
+        SBOM_DIFF_PR: ${{ inputs.pull-request-number }}
+        ACTION_ROOT: ${{ github.action_path }}/../..
+      run: |
+        set -euo pipefail
+        # action_path is actions/comment — repo root is two levels up
+        ROOT="$(cd "$ACTION_ROOT" && pwd)"
+        node "$ROOT/src/comment.js"
