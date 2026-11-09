@@ -1,5 +1,5 @@
 name: sbom-diff-comment
-description: Validate an sbom-diff JSON artifact and post or update a sticky PR comment. Never checks out PR code.
+description: Validate an sbom-diff JSON artifact and post or update a sticky PR comment. Never checks out PR code. Never trusts the PR number from the artifact.
 author: dhivagar29
 branding:
   icon: message-square
@@ -9,11 +9,18 @@ inputs:
     description: Path to the downloaded sbom-diff JSON artifact
     required: true
   repository:
-    description: owner/repo
+    description: owner/repo of the base repository that received the PR
     required: false
     default: ${{ github.repository }}
-  pull-request-number:
-    description: PR number (optional if present in artifact meta)
+  trusted-head-sha:
+    description: Trusted head SHA from github.event.workflow_run.head_sha (required)
+    required: true
+  head-owner:
+    description: Optional head repo owner (workflow_run.head_repository.owner.login) for fork matching
+    required: false
+    default: ''
+  head-repo:
+    description: Optional head repo name (workflow_run.head_repository.name) for fork matching
     required: false
     default: ''
   github-token:
@@ -33,10 +40,11 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github-token }}
         GITHUB_REPOSITORY: ${{ inputs.repository }}
         SBOM_DIFF_ARTIFACT: ${{ inputs.artifact-path }}
-        SBOM_DIFF_PR: ${{ inputs.pull-request-number }}
+        SBOM_DIFF_TRUSTED_HEAD_SHA: ${{ inputs.trusted-head-sha }}
+        SBOM_DIFF_HEAD_OWNER: ${{ inputs.head-owner }}
+        SBOM_DIFF_HEAD_REPO: ${{ inputs.head-repo }}
         ACTION_ROOT: ${{ github.action_path }}/../..
       run: |
         set -euo pipefail
-        # action_path is actions/comment — repo root is two levels up
         ROOT="$(cd "$ACTION_ROOT" && pwd)"
         node "$ROOT/src/comment.js"

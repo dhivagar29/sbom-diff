@@ -51,9 +51,11 @@ Full tables for all ecosystems are in the sample file.
 | Trigger | `pull_request` | `workflow_run` (A completed) |
 | Permissions | `contents: read` | `actions: read`, `pull-requests: write` |
 | Checks out PR code? | Yes, read-only, no credentials | **Never** |
-| Does | Diff manifests, query OSV, upload JSON artifact | Download artifact, **validate schema**, escape markdown, post/update one sticky comment |
+| Does | Checkout **default branch** (trusted action) at workspace root; checkout PR base/head as data only; diff manifests, query OSV, upload JSON artifact | Download artifact, reject if `meta.headSha` ≠ `workflow_run.head_sha`, resolve PR via API by that SHA (**never** the number in the artifact), escape markdown, post/update one sticky comment |
 
-The comment job treats the artifact as untrusted input: size cap (512 KiB), schema version check, field length limits, and HTML/markdown escaping before the body is posted.
+The comment job treats the artifact as untrusted input: size cap (512 KiB), schema version check, field length limits, and HTML/markdown escaping before the body is posted. It also **rejects** the artifact when `meta.headSha` does not equal `github.event.workflow_run.head_sha`, then finds the PR with `GET /repos/{owner}/{repo}/commits/{sha}/pulls` (optionally filtered by head owner/repo). A forged `pullRequestNumber` inside the artifact is ignored.
+
+Workflow A checks out the repository **default branch** at the workspace root so `uses: ./` runs the trusted action code, not whatever the PR branch contains. The PR base and head SHAs are checked out only under `base/` and `head/` as read-only data (`persist-credentials: false`).
 
 ## Usage
 
@@ -61,18 +63,25 @@ Copy the two workflows from [`.github/workflows/`](.github/workflows/), then poi
 
 ```yaml
 # .github/workflows/sbom-diff.yml  (Workflow A)
-- uses: dhivagar29/sbom-diff@<full-commit-sha>
+# 1) checkout default branch at workspace root (trusted action)
+# 2) checkout PR base → base/ and PR head → head/ (data only)
+- uses: ./   # or dhivagar29/sbom-diff@<full-commit-sha> when consuming elsewhere
   with:
     base-path: base
     head-path: head
     output-path: sbom-diff.json
+    head-sha: ${{ github.event.pull_request.head.sha }}
 ```
 
 ```yaml
 # .github/workflows/sbom-diff-comment.yml  (Workflow B)
-- uses: dhivagar29/sbom-diff/actions/comment@<full-commit-sha>
+- uses: ./sbom-diff/actions/comment   # after trusted default-branch checkout
+  # or: dhivagar29/sbom-diff/actions/comment@<full-commit-sha>
   with:
     artifact-path: ./artifact/sbom-diff.json
+    trusted-head-sha: ${{ github.event.workflow_run.head_sha }}
+    head-owner: ${{ github.event.workflow_run.head_repository.owner.login }}
+    head-repo: ${{ github.event.workflow_run.head_repository.name }}
 ```
 
 Pin every third-party action the same way (examples in the workflow files already use full SHAs with version tags in comments).

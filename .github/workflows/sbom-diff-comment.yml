@@ -1,6 +1,8 @@
 # Workflow B — comment. Runs on workflow_run after Workflow A completes.
 # permissions: pull-requests: write, actions: read.
 # NEVER checks out or executes the PR's code. Treats the artifact as untrusted.
+# NEVER trusts artifact.meta.pullRequestNumber — resolves the PR from
+# workflow_run.head_sha via the GitHub API after rejecting SHA mismatches.
 name: sbom-diff-comment
 on:
   workflow_run:
@@ -39,3 +41,6 @@ jobs:
         with:
           artifact-path: ./artifact/sbom-diff.json
           repository: ${{ github.repository }}
+          trusted-head-sha: ${{ github.event.workflow_run.head_sha }}
+          head-owner: ${{ github.event.workflow_run.head_repository.owner.login }}
+          head-repo: ${{ github.event.workflow_run.head_repository.name }}
