@@ -23,6 +23,10 @@ inputs:
     description: Optional head repo name (workflow_run.head_repository.name) for fork matching
     required: false
     default: ''
+  head-branch:
+    description: Optional head branch (workflow_run.head_branch) for fork PR fallback lookup
+    required: false
+    default: ''
   github-token:
     description: Token with pull-requests:write
     required: false
@@ -43,6 +47,7 @@ runs:
         SBOM_DIFF_TRUSTED_HEAD_SHA: ${{ inputs.trusted-head-sha }}
         SBOM_DIFF_HEAD_OWNER: ${{ inputs.head-owner }}
         SBOM_DIFF_HEAD_REPO: ${{ inputs.head-repo }}
+        SBOM_DIFF_HEAD_BRANCH: ${{ inputs.head-branch }}
         ACTION_ROOT: ${{ github.action_path }}/../..
       run: |
         set -euo pipefail

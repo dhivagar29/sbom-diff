@@ -44,3 +44,4 @@ jobs:
           trusted-head-sha: ${{ github.event.workflow_run.head_sha }}
           head-owner: ${{ github.event.workflow_run.head_repository.owner.login }}
           head-repo: ${{ github.event.workflow_run.head_repository.name }}
+          head-branch: ${{ github.event.workflow_run.head_branch }}
