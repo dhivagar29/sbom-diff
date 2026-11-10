@@ -1,0 +1,2 @@
+# Live-test pin so the PR workflow has a harmless added dependency to report.
+requests==2.32.3
